@@ -1,0 +1,42 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <AssemblyName>CustomLocales</AssemblyName>
+    <Description>Plugin that will overwrite game localization with custom text</Description>
+    <Version>1.0.0</Version>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BepInEx.Analyzers" Version="1.*" PrivateAssets="all" />
+    <PackageReference Include="BepInEx.Core" Version="5.*" />
+    <PackageReference Include="BepInEx.PluginInfoProps" Version="1.*" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="UnityEngine.Modules" Version="2021.3.8" IncludeAssets="compile" />
+  </ItemGroup>
+  
+  <ItemGroup Condition="'$(TargetFramework.TrimEnd(`0123456789`))' == 'net'">
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" PrivateAssets="all" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Reference Include="PotionCraft.Core">
+      <HintPath>..\..\PotionCraftLibs\PotionCraft.Core.dll</HintPath>
+	  <Private>False</Private>
+    </Reference>
+    <Reference Include="PotionCraft.DataBaseSystem">
+      <HintPath>..\..\PotionCraftLibs\PotionCraft.DataBaseSystem.dll</HintPath>
+	  <Private>False</Private>
+    </Reference>
+    <Reference Include="PotionCraft.Scripts">
+      <HintPath>..\..\PotionCraftLibs\PotionCraft.Scripts.dll</HintPath>
+	  <Private>False</Private>
+    </Reference>
+    <Reference Include="QFSW.QC">
+      <HintPath>..\..\PotionCraftLibs\QFSW.QC.dll</HintPath>
+	  <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+</Project>
