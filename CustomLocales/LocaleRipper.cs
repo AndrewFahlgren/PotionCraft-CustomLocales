@@ -35,7 +35,7 @@ namespace CustomLocales
             }
 
             string assPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            string dumpDir = Path.Combine(assPath, "RippedLocales");
+            string dumpDir = Path.Combine(assPath, "Ripped");
             if (!Directory.Exists(dumpDir))
             {
                 Directory.CreateDirectory(dumpDir);

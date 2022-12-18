@@ -18,7 +18,7 @@ namespace CustomLocales
         public static readonly LocalizationManager.Locale DefaultLocale = LocalizationManager.Locale.en;
         public static LocalizationData library;
 
-        public static string localeDir = "UpdatedLocales";
+        public static string localeDir = "Custom";
 
         [HarmonyPostfix, HarmonyPatch(typeof(LocalizationManager), "LoadLocalizationData")]
         public static void LoadLocalizationData_Postfix(ref LocalizationData __result)
