@@ -14,7 +14,7 @@ CustomLocales is a mod made with BepInEx for use with the Potion Craft game. It 
 
 - Download the latest version from the releases page
 - Unzip the folder
-- Copy the folder into Potion Craft/BepInEx/plugins/
+- Copy the folder into `/Potion Craft/BepInEx/plugins/`
 - Run the game
 
 ## Usage
