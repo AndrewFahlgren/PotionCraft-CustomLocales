@@ -5,7 +5,7 @@ using QFSW.QC;
 
 namespace CustomLocales
 {
-    [BepInPlugin(PluginInfo.PLUGIN_GUID, PluginInfo.PLUGIN_NAME, PluginInfo.PLUGIN_VERSION)]
+    [BepInPlugin(PluginInfo.PLUGIN_GUID, PluginInfo.PLUGIN_NAME, "1.0.1")]
     public class CustomLocalesPlugin : BaseUnityPlugin
     {
         internal static ManualLogSource Log { get; private set; }

@@ -47,7 +47,7 @@ namespace CustomLocales
                 string json = JsonConvert.SerializeObject(inverted[l], Formatting.Indented);
 
                 string localePath = Path.Combine(dumpDir, $"{l}.json");
-                using var outStream = new StreamWriter(localePath, true);
+                using var outStream = new StreamWriter(localePath, false);
                 outStream.WriteLine(json);
             }
         }
