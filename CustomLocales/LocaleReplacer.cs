@@ -31,7 +31,7 @@ namespace CustomLocales
         {
             if (library == null)
             {
-                Log.LogDebug("Library is null");
+                Log.LogWarning("Library is null");
                 return;
             }
 
@@ -40,37 +40,31 @@ namespace CustomLocales
 
             if (!Directory.Exists(localePath))
             {
-                Log.LogDebug($"ParseLocales: Directory '{localeDir}' does not exist");
+                Log.LogInfo($"ParseLocales: Directory '{localeDir}' does not exist");
                 return;
             }
 
-            foreach (LocalizationManager.Locale lang in Enum.GetValues(typeof(LocalizationManager.Locale)))
+            foreach (string localeFile in Directory.GetFiles(localePath))
             {
-                string localeFile = Path.Combine(localePath, $"{lang}.json");
-
-                if (!File.Exists(localeFile))
-                {
-                    Log.LogDebug($"ParseLocales: Skipping '{lang}' - no json file found");
-                    continue;
-                }
-
                 string json = File.ReadAllText(localeFile);
+                string lang = Path.GetFileNameWithoutExtension(localeFile);
 
                 if (!string.IsNullOrEmpty(json))
                 {
-                    if (ParseJsonLocales(json, lang, out int counter))
+                    if (ParseJsonLocales(json, out int counter))
                     {
-                        Log.LogDebug($"ParseLocales: Overwrote {counter} key entries for '{lang}'");
+                        Log.LogInfo($"ParseLocales: Overwrote {counter} key entries for '{lang}'");
+                        break;
                     }
                     else
                     {
-                        Log.LogInfo($"Error encountered trying to parse '{lang}.json'");
+                        Log.LogWarning($"Error encountered trying to parse '{lang}.json'. Looking for more files to parse.");
                     }
                 }
             }
         }
 
-        private static bool ParseJsonLocales(string json, LocalizationManager.Locale lang, out int counter)
+        private static bool ParseJsonLocales(string json, out int counter)
         {
             counter = 0;
             Dictionary<string, string> data;
@@ -84,15 +78,17 @@ namespace CustomLocales
                 Log.LogError(e);
                 return false;
             }
+            var libraryData = (SerializedDictionaryStringLocalizationTextData)Traverse.Create(library).Field("data").GetValue();
+            var currentLocale = (int)LocalizationManager.CurrentLocale;
 
             foreach ((string key, string text) in data.Select(kvp => (kvp.Key, kvp.Value)))
             {
-                if (!library.Contains(key, (int)lang, (int)lang))
+                if (!libraryData.ContainsKey(key))
                 {
                     Log.LogWarning($"Skipping '{key}' as it doesn't exist");
                     continue;
                 }
-                library.data[key].Add((int)lang, text);
+                libraryData[key].Add(currentLocale, text);
                 counter++;
             }
 

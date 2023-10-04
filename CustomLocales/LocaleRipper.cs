@@ -1,4 +1,5 @@
 ﻿using BepInEx.Logging;
+using HarmonyLib;
 using Newtonsoft.Json;
 using PotionCraft.Assemblies.DataBaseSystem.PreparedObjects;
 using PotionCraft.LocalizationSystem;
@@ -25,7 +26,8 @@ namespace CustomLocales
             }
 
             Log.LogDebug("Ripping localization");
-            var data = LocalizationManager.localizationData.data;
+            var localizationData = (LocalizationData)Traverse.Create(typeof(LocalizationManager)).Field("localizationData").GetValue();
+            var data = (SerializedDictionaryStringLocalizationTextData)Traverse.Create(localizationData).Field("data").GetValue();
             foreach ((string key, LocalizationTextData value) in data.Select(kvp => (kvp.Key, kvp.Value)))
             {
                 foreach (Locale l in Enum.GetValues(typeof(Locale)))
